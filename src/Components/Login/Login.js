@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-function Home (setisAuthenticated) {
+function Home () {
     const navigate = useNavigate();
 
     return (
@@ -21,7 +21,7 @@ function Home (setisAuthenticated) {
               e.target.email.value = "";
               e.target.password.value = "";
               localStorage.setItem('isAuthenticated', 'true');
-              navigate('/home');
+              navigate('/');
               window.location.reload();
             } else {
               alert("Wrong email or password combination");

@@ -9,10 +9,8 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-
   //load the index.html from a url
   win.loadURL('http://localhost:3000');
-
   // Open the DevTools.
   win.webContents.openDevTools()
 }

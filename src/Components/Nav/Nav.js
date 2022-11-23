@@ -61,7 +61,13 @@ return (
                     <h2>Options</h2>
                     <ul>
                         <li>
-                            <a href="/home">Retour à l'accueil</a>
+                            <a href="/">Retour à l'accueil</a>
+                        </li>
+                        <li>
+                        <a href="/" onClick={()=>{
+                                localStorage.clear();
+                                window.location.reload();
+                            }}>Reset de l'application</a>
                         </li>
                     </ul>
                 </div>
