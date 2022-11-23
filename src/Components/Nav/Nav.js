@@ -61,7 +61,7 @@ return (
                     <h2>Options</h2>
                     <ul>
                         <li>
-                            <a href="index.ejs">Retour à l'accueil</a>
+                            <a href="/home">Retour à l'accueil</a>
                         </li>
                     </ul>
                 </div>

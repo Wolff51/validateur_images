@@ -38,12 +38,6 @@ function Home (setisAuthenticated) {
             </div>
             <button className="primary">ENTRER</button>
           </form>
-          <button className="secondary" onClick={async (e) => {
-            e.preventDefault();
-              alert("Fonction pas encore disponible");
-          }}>
-            Créer un compte
-          </button>
         </div>
       );
 }
