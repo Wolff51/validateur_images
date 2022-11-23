@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  background: #b5c0ad;
+  min-height: 720px;
+  min-width: 320px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.App {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  max-width: 615px;
+  padding-bottom: 66px;
+  padding-top: 46px;
+  text-align: center;
+  width: 90%;
+}
