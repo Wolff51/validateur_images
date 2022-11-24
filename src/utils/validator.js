@@ -19,8 +19,6 @@ const validators = {
         myArray.push(row);
     },
     save() {
-        console.log("sauvegarde en cours");
-        // send data from array in myArray to csv file in data directory
         const csvData = myArray;
         const header = [
             { label: "Nom de l'image", key: "name" },
@@ -36,9 +34,7 @@ const validators = {
         );
     },
     previous() {
-    // remove from myArray the last element
     myArray.pop();
-    console.log("previous")
     }
 
 }
