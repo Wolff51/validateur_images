@@ -9,6 +9,13 @@ const validators = {
     const row = {name: myImg, Avalue: 1, Bvalue: "-", Choice: 1 };
     myArray.push(row);
     },
+
+    isNotValid(img) {
+    const myImg = img.replace('./', '');
+    const row = {name: myImg, Avalue: 0, Bvalue: "-", Choice: 1 };
+    myArray.push(row);
+    },
+
     BisValid(img) {
         const myImg = img.replace('./', '');
         console.log(myImg);
@@ -16,19 +23,21 @@ const validators = {
         const index = myArray[0].findIndex(x => x.name === myImg);
         myArray[0][index].Bvalue = 1;
         myArray[0][index].Choice = 0;
-        console.log(myArray);
-
         },
-    isNotValid(img) {
+
+    BisNotValid(img) {
         const myImg = img.replace('./', '');
-        const row = {name: myImg, Avalue: 0};
-        myArray.push(row);
+        const index = myArray[0].findIndex(x => x.name === myImg);
+        myArray[0][index].Bvalue = 0;
+        myArray[0][index].Choice = "-1";
     },
+
     isNotImg(img) {
         const myImg = img.replace('./', '');
         const row = {name: myImg, Avalue: -1};
         myArray.push(row);
     },
+
     save() {
         const csvData = myArray;
         const header = [
@@ -40,7 +49,7 @@ const validators = {
         const csvReport = {
             data: csvData,
             headers: header,
-            filename: 'result.csv',
+            filename: 'resA.csv',
         };
 
         return (
@@ -48,6 +57,31 @@ const validators = {
                 console.log("You click the link");
                 localStorage.setItem("AisValide", true);
                 localStorage.setItem("myArray", JSON.stringify(myArray));
+                window.location.reload();
+              }}>Enregistrer et Télécharger les résultats</CSVLink>
+        );
+            
+    },
+
+    saveB() {
+        const csvData = myArray[0];
+        const header = [
+            { label: "Nom de l'image", key: "name" },
+            { label: "Valeur de A", key: "Avalue" },
+            { label: "Valeur de B", key: "Bvalue" },
+            { label: "Choice", key: "Choice" },
+        ];
+        const csvReport = {
+            data: csvData,
+            headers: header,
+            filename: 'res.csv',
+        };
+
+        return (
+            <CSVLink {...csvReport} separator=";"  onClick={() => {
+                console.log("validation over");
+                localStorage.removeItem("AisValide");
+                localStorage.setItem("validation", true);
                 window.location.reload();
               }}>Enregistrer et Télécharger les résultats</CSVLink>
         );
@@ -69,6 +103,14 @@ const validators = {
 
     previous() {
     myArray.pop();
+    },
+
+    previousB(img){
+        const myImg = img.replace('./', '');
+        const index = myArray[0].findIndex(x => x.name === myImg);
+        myArray[0][index].Bvalue = "undefined";
+        myArray[0][index].Choice = "undefined";
+        console.log(myArray);
     }
 
 }
