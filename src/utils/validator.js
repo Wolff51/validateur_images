@@ -1,28 +1,46 @@
+import { CSVLink, CSVDownload } from "react-csv";
 let myArray = [];
 
-const validors = {
+
+const validators = {
     isValid(img) {
     const myImg = img.replace('./', '');
-    const row = [myImg, 1];
+    const row = {name: myImg, Avalue: 1};
     myArray.push(row);
-    console.log(myArray)
     },
     isNotValid(img) {
         const myImg = img.replace('./', '');
-        const row = [myImg, 0];
+        const row = {name: myImg, Avalue: 0};
         myArray.push(row);
-        console.log(myArray)
     },
     isNotImg(img, result) {
-    console.log("l'image n'est pas une image")
+        const myImg = img.replace('./', '');
+        const row = {name: myImg, Avalue: -1};
+        myArray.push(row);
+    },
+    save() {
+        console.log("sauvegarde en cours");
+        // send data from array in myArray to csv file in data directory
+        const csvData = myArray;
+        const header = [
+            { label: "Nom de l'image", key: "name" },
+            { label: "Valeur de A", key: "Avalue" },
+        ];
+        const csvReport = {
+            data: csvData,
+            headers: header,
+            filename: 'result.csv',
+        };
+        return (
+            <CSVLink {...csvReport} separator=";">Download me</CSVLink>
+        );
     },
     previous() {
     // remove from myArray the last element
     myArray.pop();
-    console.log(myArray)
     console.log("previous")
     }
 
 }
 
-export default validors;
+export default{myArray, validators};
