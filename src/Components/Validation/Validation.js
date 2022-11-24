@@ -6,7 +6,6 @@ import validator from '../../utils/validator';
 
 if (localStorage.getItem("myArray") !== null) {
    validator.validators.getResult();
-   console.log(validator.myArray)
  }
 
  
@@ -40,8 +39,8 @@ if(localStorage.getItem('AisValide', 'true')){
         <img src={require(`../../data/B/${validator.myArray[0][count].name}.jpg`)} alt="Lights" width="100%" height="100%" />
         <br/>
         <button className="buttonBhide button is-normal is-rounded  is-success is-responsive" onClick={() => {
+            validator.validators.BisValid(validator.myArray[0][count].name);
             if(count === validator.myArray[0].length -1) {
-                validator.validators.BisValid(validator.myArray[0][count].name);
                 const myDiv = document.getElementById("validateB")
                 myDiv.style.visibility = "visible";
                 const myButton = document.getElementsByClassName("buttonBhide")
@@ -49,14 +48,24 @@ if(localStorage.getItem('AisValide', 'true')){
                 myButton[i].style.visibility = "hidden";
             }
             } else {
-                validator.validators.BisValid(validator.myArray[0][count].name);
+
                 setCount(count + 1);
             }
                 }}>Valider</button>
         
         <button className="buttonBhide button is-normal is-rounded  is-danger is-responsive" onClick={() => {
-                  validator.validators.BisValid(validator.myArray[0][count].name);
-                  setCount(count + 1);
+                 if(count === validator.myArray[0].length -1) {
+                    validator.validators.BisNotValid(validator.myArray[0][count].name);
+                    const myDiv = document.getElementById("validateB")
+                    myDiv.style.visibility = "visible";
+                    const myButton = document.getElementsByClassName("buttonBhide")
+                    for (let i = 0; i < myButton.length; i++) {
+                    myButton[i].style.visibility = "hidden";
+                }
+                } else {
+                    validator.validators.BisNotValid(validator.myArray[0][count].name);
+                    setCount(count + 1);
+                }
                 }}>Refuser</button>
         
         <br/>
@@ -65,7 +74,13 @@ if(localStorage.getItem('AisValide', 'true')){
             if(count === 0) {
                 alert("Vous êtes déjà sur la première image")
             } else {
-                  validator.validators.previousB(validator.myArray[0][count - 1].name);
+                const myDiv = document.getElementById("validateB")
+                myDiv.style.visibility = "hidden";
+                const myButton = document.getElementsByClassName("buttonBhide")
+                for (let i = 0; i < myButton.length; i++) {
+                    myButton[i].style.visibility = "visible";
+                }
+                  validator.validators.previousB(validator.myArray[0][count].name);
                   setCount(count -1);
         }}}>Précédent</button>
 

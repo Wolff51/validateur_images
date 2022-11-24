@@ -18,7 +18,6 @@ const validators = {
 
     BisValid(img) {
         const myImg = img.replace('./', '');
-        console.log(myImg);
         // find where name is equal to myImg in myArray and add Bvalue
         const index = myArray[0].findIndex(x => x.name === myImg);
         myArray[0][index].Bvalue = 1;
@@ -29,12 +28,12 @@ const validators = {
         const myImg = img.replace('./', '');
         const index = myArray[0].findIndex(x => x.name === myImg);
         myArray[0][index].Bvalue = 0;
-        myArray[0][index].Choice = "-1";
+        myArray[0][index].Choice = -1;
     },
 
     isNotImg(img) {
         const myImg = img.replace('./', '');
-        const row = {name: myImg, Avalue: -1};
+        const row = {name: myImg, Avalue: -1, Bvalue: "waitingBvalidation", Choice: "waitingBvalidation" };
         myArray.push(row);
     },
 
@@ -54,7 +53,6 @@ const validators = {
 
         return (
             <CSVLink {...csvReport} separator=";"  onClick={() => {
-                console.log("You click the link");
                 localStorage.setItem("AisValide", true);
                 localStorage.setItem("myArray", JSON.stringify(myArray));
                 window.location.reload();
@@ -64,7 +62,23 @@ const validators = {
     },
 
     saveB() {
-        const csvData = myArray[0];
+        const dataB = myArray[0];
+        console.log(dataB);
+        const dataA = JSON.parse(localStorage.getItem("myArray"))
+        const resultArray = dataA.map(row => {
+            const name = row.name.split('.')[0];
+            return {...row, name};  
+        });
+        for (const prop of dataB) {
+            const index = resultArray.findIndex(x => x.name === prop.name);
+            resultArray[index].Bvalue = prop.Bvalue;
+            resultArray[index].Choice = prop.Choice;
+        }
+
+
+      console.log(resultArray)
+
+        const csvData = resultArray;
         const header = [
             { label: "Nom de l'image", key: "name" },
             { label: "Valeur de A", key: "Avalue" },
@@ -79,8 +93,8 @@ const validators = {
 
         return (
             <CSVLink {...csvReport} separator=";"  onClick={() => {
-                console.log("validation over");
                 localStorage.removeItem("AisValide");
+                localStorage.removeItem("myArray");
                 localStorage.setItem("validation", true);
                 window.location.reload();
               }}>Enregistrer et Télécharger les résultats</CSVLink>
@@ -97,8 +111,6 @@ const validators = {
             return {...row, name};  
         });
         myArray.push(filteredData2);
-        console.log(filteredData2)
-        localStorage.removeItem("myArray");
     },
 
     previous() {
@@ -110,7 +122,6 @@ const validators = {
         const index = myArray[0].findIndex(x => x.name === myImg);
         myArray[0][index].Bvalue = "undefined";
         myArray[0][index].Choice = "undefined";
-        console.log(myArray);
     }
 
 }
