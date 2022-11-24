@@ -12,7 +12,7 @@ const validators = {
 
     isNotValid(img) {
     const myImg = img.replace('./', '');
-    const row = {name: myImg, Avalue: 0, Bvalue: "-", Choice: 1 };
+    const row = {name: myImg, Avalue: 0, Bvalue: "", Choice: "" };
     myArray.push(row);
     },
 
@@ -33,7 +33,7 @@ const validators = {
 
     isNotImg(img) {
         const myImg = img.replace('./', '');
-        const row = {name: myImg, Avalue: -1, Bvalue: "waitingBvalidation", Choice: "waitingBvalidation" };
+        const row = {name: myImg, Avalue: -1, Bvalue: "", Choice: "" };
         myArray.push(row);
     },
 
@@ -63,7 +63,6 @@ const validators = {
 
     saveB() {
         const dataB = myArray[0];
-        console.log(dataB);
         const dataA = JSON.parse(localStorage.getItem("myArray"))
         const resultArray = dataA.map(row => {
             const name = row.name.split('.')[0];
@@ -74,9 +73,6 @@ const validators = {
             resultArray[index].Bvalue = prop.Bvalue;
             resultArray[index].Choice = prop.Choice;
         }
-
-
-      console.log(resultArray)
 
         const csvData = resultArray;
         const header = [
