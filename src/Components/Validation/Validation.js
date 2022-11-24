@@ -1,44 +1,42 @@
+/* eslint-disable no-lone-blocks */
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Validation.css';
 import validator from '../../utils/validator';
 
-function Validation() {
-const navigate = useNavigate();
+
+if (localStorage.getItem("myArray") !== null) {
+   validator.validators.getResult();
+   console.log(validator.myArray)
+ }
+
+ 
+
+function Validation() {    
 /* Je récupère mes images */
 const imagesA = require.context('../../data/A', true, /(\.txt|\.jpg)$/);
-const imagesB = require.context('../../data/B', true, /(\.txt|\.jpg)$/);
 
 let keyA = imagesA.keys()
-let keyB = imagesB.keys();
+
 
 const [count, setCount] = useState(0);
-
 // Similar to componentDidMount and componentDidUpdate:
 useEffect(() => {
   document.title = `You clicked ${count} times`;
 });
 
-console.log(validator.myArray)
-
 if(localStorage.getItem('AisValide', 'true')){
     return (
         <div className="images">
          <p className="subtitle">Voulez-vous valider l'image B numéro {count+1} ?</p>
-        <img src={imagesA(keyB[count])} alt="Lights" width="100%" height="100%" id="actual_image" />
+        <img src={require(`../../data/B/${validator.myArray[0][count].name}.jpg`)} alt="Lights" width="100%" height="100%" />
+        <br/>
         <button className="button is-normal is-rounded  is-success is-responsive" onClick={() => {
-                if(count === keyB.length -1) {
-                    alert("Vous avez validé toutes les images")
-                    localStorage.setItem('AisValide', 'true');
-                    navigate('/validation');
-                }
-                  validator.validators.BisValid(keyB[count]);
-                  setCount(count + 1);
+            validator.validators.BisValid(validator.myArray[0][count].name);
+            setCount(count + 1);
                 }}>Valider</button>
         
         <button className="button is-normal is-rounded  is-danger is-responsive" onClick={() => {
-                  validator.validators.BisNotValid(keyB[count]);
-                  setCount(count + 1);
+                  console.log("à coder")
                 }}>Refuser</button>
         
         <br/>
@@ -50,29 +48,34 @@ if(localStorage.getItem('AisValide', 'true')){
                   validator.validators.previous();
                   setCount(count -1);
         }}}>Précédent</button>
-                
-        
+
+        <br/>
         </div>
         );
 }
 return (
 <div className="images">
  <p className="subtitle">Voulez-vous valider l'image A numéro {count+1} ?</p>
-<img src={imagesA(keyA[count])} alt="Lights" width="100%" height="100%" id="actual_image" />
-
-{/* <button className="primary" onClick={() => setCount(count + 1)}>Suivant</button> */}
-
-<button className="button is-normal is-rounded  is-success is-responsive" onClick={() => {
+<img src={imagesA(keyA[count])} alt="Lights" width="100%" height="100%" />
+<br/>
+<button className="buttonhide button is-normal is-rounded  is-success is-responsive" onClick={() => {
         if(count === keyA.length -1) {
-            alert("Vous avez validé toutes les images")
-            localStorage.setItem('AisValide', 'true');
-            navigate('/');
+            validator.validators.isValid(keyA[count]);
+            console.log(validator.myArray)
+            const myDiv = document.getElementById("validate")
+            myDiv.style.visibility = "visible";
+            const myButton = document.getElementsByClassName("buttonhide")
+            for (let i = 0; i < myButton.length; i++) {
+                myButton[i].style.visibility = "hidden";
+            }
+        } 
+        else {
+            validator.validators.isValid(keyA[count]);
+            setCount(count + 1);
         }
-          validator.validators.isValid(keyA[count]);
-          setCount(count + 1);
         }}>Valider</button>
 
-<button className="button is-normal is-rounded  is-danger is-responsive" onClick={() => {
+<button className="buttonhide button is-normal is-rounded  is-danger is-responsive" onClick={() => {
           validator.validators.isNotValid(keyA[count]);
           setCount(count + 1);
         }}>Refuser</button>
@@ -82,14 +85,21 @@ return (
 <button className="button is-normal is-rounded  is-info is-responsive" onClick={() => {
     if(count === 0) {
         alert("Vous êtes déjà sur la première image")
-    } else {
+    } 
+    else {
+        const myDiv = document.getElementById("validate")
+        myDiv.style.visibility = "hidden";
+        const myButton = document.getElementsByClassName("buttonhide")
+        for (let i = 0; i < myButton.length; i++) {
+            myButton[i].style.visibility = "visible";
+        }
           validator.validators.previous();
           setCount(count -1);
 }}}>Précédent</button>
 
 <br/>
 
-<button className="button is-normal is-rounded  is-info is-responsive" onClick={() => {
+<button className="buttonhide button is-normal is-rounded  is-info is-responsive" onClick={() => {
           validator.validators.isNotImg(keyA[count]);
           setCount(count + 1);
 }}>Pas d'image</button>
@@ -97,8 +107,10 @@ return (
 
 <br/>
 
-{validator.validators.save()}
-        
+<div id="validate">
+   {validator.validators.save()}
+
+</div>
 
 </div>
 );
