@@ -19,7 +19,7 @@ let keyA = imagesA.keys()
 
 
 const [count, setCount] = useState(0);
-// Similar to componentDidMount and componentDidUpdate:
+
 useEffect(() => {
   document.title = `You clicked ${count} times`;
 });
@@ -32,11 +32,12 @@ if(localStorage.getItem("AisValide") !== "true" && localStorage.getItem("validat
         <button className="buttonhide button is-normal is-rounded  is-success is-responsive" onClick={() => {
                validator.validators.isValid(keyA[count]);
                 if(count === keyA.length -1) { 
-                    // Create element that will write the function jsx on id validate
                     const myDiv = document.getElementById("validate");
-                    // Write the function on myDiv using react
                     ReactDOM.render(validator.validators.save(), myDiv);
-                } 
+                    const myButton = document.getElementsByClassName("buttonhide")
+                    for (let i = 0; i < myButton.length; i++) {
+                    myButton[i].style.visibility = "hidden";
+                }}
                 else {
                     setCount(count + 1);
                 }
@@ -50,19 +51,26 @@ if(localStorage.getItem("AisValide") !== "true" && localStorage.getItem("validat
         <br/>
         
         <button className="button is-normal is-rounded  is-info is-responsive" onClick={() => {
-            if(count === 0) {
-                alert("Vous êtes déjà sur la première image")
-            } 
-            else {
-                const myDiv = document.getElementById("validate")
-                myDiv.style.display = "none";
-                const myButton = document.getElementsByClassName("buttonhide")
-                for (let i = 0; i < myButton.length; i++) {
-                    myButton[i].style.visibility = "visible";
-                }
-                  validator.validators.previous();
-                  setCount(count -1);
-        }}}>Précédent</button>
+                        if(count === 0){
+                            alert("Vous êtes déjà sur la première image")
+                        } else if (count !== validator.myArray[0].length -1) {
+                            const myButton = document.getElementsByClassName("buttonhide")
+                            for (let i = 0; i < myButton.length; i++) {
+                                myButton[i].style.visibility = "visible";
+                            }
+                            validator.validators.previous();
+                            setCount(count -1);
+                        } else {
+                            if(document.getElementsByClassName("buttonhide")[0].style.visibility === "visible"){
+                                setCount(count -1);
+                            }
+                            validator.validators.previous();
+                            const myButton = document.getElementsByClassName("buttonhide")
+                            for (let i = 0; i < myButton.length; i++) {
+                                    myButton[i].style.visibility = "visible";
+                            } 
+                        } 
+            }}>Précédent</button>
         
         <br/>
         
