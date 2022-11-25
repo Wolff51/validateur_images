@@ -10,13 +10,13 @@ Exercice de création d'un validateur d'images en React / Electron
 npm install
 ```
 
-### Lancement de React
+### Lancement du support React
 
 ```bash
 npm start
 ```
 
-### Lancement d'Electron
+### Dernière étape : lancement d'Electron
 
 ```bash
 npm run electron-dev
