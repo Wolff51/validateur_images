@@ -1,4 +1,4 @@
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 
 let myArray = [];
 
@@ -52,7 +52,7 @@ const validators = {
         };
 
         return (
-            <CSVLink {...csvReport} separator=";"  onClick={() => {
+            <CSVLink {...csvReport} separator=";" onClick={() => {
                 localStorage.setItem("AisValide", true);
                 localStorage.setItem("myArray", JSON.stringify(myArray));
                 window.location.reload();
@@ -122,4 +122,4 @@ const validators = {
 
 }
 
-export default{myArray, validators};
+export default {myArray, validators};

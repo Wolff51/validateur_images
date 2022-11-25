@@ -5,10 +5,10 @@
   margin: 0.5em;
 }
 
-#validate {
-  visibility: hidden;
+/* #validate {
+  display: none;
 }
 
 #validateB {
-  visibility: hidden;
-}
+  display: none;
+} */

@@ -1,5 +1,6 @@
 /* eslint-disable no-lone-blocks */
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom'
 import './Validation.css';
 import validator from '../../utils/validator';
 
@@ -29,17 +30,14 @@ if(localStorage.getItem("AisValide") !== "true" && localStorage.getItem("validat
         <img src={imagesA(keyA[count])} alt="Lights" width="100%" height="100%" />
         <br/>
         <button className="buttonhide button is-normal is-rounded  is-success is-responsive" onClick={() => {
-                if(count === keyA.length -1) {
-                    validator.validators.isValid(keyA[count]);
-                    const myDiv = document.getElementById("validate")
-                    myDiv.style.visibility = "visible";
-                    const myButton = document.getElementsByClassName("buttonhide")
-                    for (let i = 0; i < myButton.length; i++) {
-                        myButton[i].style.visibility = "hidden";
-                    }
+               validator.validators.isValid(keyA[count]);
+                if(count === keyA.length -1) { 
+                    // Create element that will write the function jsx on id validate
+                    const myDiv = document.getElementById("validate");
+                    // Write the function on myDiv using react
+                    ReactDOM.render(validator.validators.save(), myDiv);
                 } 
                 else {
-                    validator.validators.isValid(keyA[count]);
                     setCount(count + 1);
                 }
                 }}>Valider</button>
@@ -57,7 +55,7 @@ if(localStorage.getItem("AisValide") !== "true" && localStorage.getItem("validat
             } 
             else {
                 const myDiv = document.getElementById("validate")
-                myDiv.style.visibility = "hidden";
+                myDiv.style.display = "none";
                 const myButton = document.getElementsByClassName("buttonhide")
                 for (let i = 0; i < myButton.length; i++) {
                     myButton[i].style.visibility = "visible";
@@ -77,7 +75,6 @@ if(localStorage.getItem("AisValide") !== "true" && localStorage.getItem("validat
         <br/>
         
         <div id="validate">
-           {validator.validators.save()}
         
         </div>
         
@@ -105,29 +102,27 @@ if(localStorage.getItem('AisValide', 'true')){
         <button className="buttonBhide button is-normal is-rounded  is-success is-responsive" onClick={() => {
             validator.validators.BisValid(validator.myArray[0][count].name);
             if(count === validator.myArray[0].length -1) {
-                const myDiv = document.getElementById("validateB")
-                myDiv.style.visibility = "visible";
-                const myButton = document.getElementsByClassName("buttonBhide")
-                for (let i = 0; i < myButton.length; i++) {
-                myButton[i].style.visibility = "hidden";
-            }
+            const myDiv = document.getElementById("validateB");
+            ReactDOM.render(validator.validators.saveB(), myDiv);
+            const myButton = document.getElementsByClassName("buttonBhide")
+            for (let i = 0; i < myButton.length; i++) {
+            myButton[i].style.visibility = "hidden";
+        }
             } else {
-
                 setCount(count + 1);
             }
                 }}>Valider</button>
         
         <button className="buttonBhide button is-normal is-rounded  is-danger is-responsive" onClick={() => {
+              validator.validators.BisNotValid(validator.myArray[0][count].name);
                  if(count === validator.myArray[0].length -1) {
-                    validator.validators.BisNotValid(validator.myArray[0][count].name);
-                    const myDiv = document.getElementById("validateB")
-                    myDiv.style.visibility = "visible";
+                    const myDiv = document.getElementById("validateB");
+                    ReactDOM.render(validator.validators.saveB(), myDiv);
                     const myButton = document.getElementsByClassName("buttonBhide")
                     for (let i = 0; i < myButton.length; i++) {
                     myButton[i].style.visibility = "hidden";
                 }
                 } else {
-                    validator.validators.BisNotValid(validator.myArray[0][count].name);
                     setCount(count + 1);
                 }
                 }}>Refuser</button>
@@ -135,22 +130,32 @@ if(localStorage.getItem('AisValide', 'true')){
         <br/>
         
         <button className="button is-normal is-rounded  is-info is-responsive" onClick={() => {
-            if(count === 0) {
+            if(count === 0){
                 alert("Vous êtes déjà sur la première image")
-            } else {
+            } else if (count !== validator.myArray[0].length -1) {
                 const myDiv = document.getElementById("validateB")
-                myDiv.style.visibility = "hidden";
+                myDiv.style.display = "none";
                 const myButton = document.getElementsByClassName("buttonBhide")
                 for (let i = 0; i < myButton.length; i++) {
                     myButton[i].style.visibility = "visible";
                 }
-                  validator.validators.previousB(validator.myArray[0][count].name);
-                  setCount(count -1);
-        }}}>Précédent</button>
+                validator.validators.previousB(validator.myArray[0][count].name);
+                setCount(count -1);
+            } else {
+                if(document.getElementsByClassName("buttonBhide")[0].style.visibility === "visible"){
+                    setCount(count -1);
+                }
+                validator.validators.previousB(validator.myArray[0][count].name);
+                const myButton = document.getElementsByClassName("buttonBhide")
+                for (let i = 0; i < myButton.length; i++) {
+                        myButton[i].style.visibility = "visible";
+                } 
+            }  
+        }}>Précédent</button>
 
         <br/>
         <div id="validateB">
-        {validator.validators.saveB()}
+        {/* {validator.validators.saveB()} */}
     </div>
         </div>
         );
