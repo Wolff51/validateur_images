@@ -9,20 +9,99 @@ if (localStorage.getItem("myArray") !== null) {
    validator.validators.getResult();
  }
 
+
  
 
 function Validation() {    
 /* Je récupère mes images */
 const imagesA = require.context('../../data/A', true, /(\.txt|\.jpg)$/);
 
-let keyA = imagesA.keys()
-
+let keyA = imagesA.keys();
 
 const [count, setCount] = useState(0);
+
 
 useEffect(() => {
   document.title = `You clicked ${count} times`;
 });
+
+useEffect(() => {
+    const keyDownHandler = event => {
+      console.log('User pressed: ', event.key);
+      if(localStorage.getItem("AisValide") === "true") {
+        if(event.key === "1") {
+            event.preventDefault();
+            validator.validators.BisValid(validator.myArray[0][count].name);
+            if(count === validator.myArray[0].length -1) {
+            const myDiv = document.getElementById("validateB");
+            ReactDOM.render(validator.validators.saveB(), myDiv);
+            const myButton = document.getElementsByClassName("buttonBhide")
+            for (let i = 0; i < myButton.length; i++) {
+            myButton[i].style.visibility = "hidden";
+        }
+            } else {
+                setCount(count + 1);
+            }
+        }
+        if(event.key === "0") {
+            event.preventDefault();
+            validator.validators.BisNotValid(validator.myArray[0][count].name);
+            if(count === validator.myArray[0].length -1) {
+            const myDiv = document.getElementById("validateB");
+            ReactDOM.render(validator.validators.saveB(), myDiv);
+            const myButton = document.getElementsByClassName("buttonBhide")
+            for (let i = 0; i < myButton.length; i++) {
+            myButton[i].style.visibility = "hidden";
+        }
+            } else {
+                setCount(count + 1);
+            }
+        }
+    } 
+    else {
+    if(event.key === "0") {
+        event.preventDefault();
+        validator.validators.isNotValid(keyA[count]);
+        if(count === keyA.length -1) { 
+            const myDiv = document.getElementById("validate");
+            ReactDOM.render(validator.validators.save(), myDiv);
+            const myButton = document.getElementsByClassName("buttonhide")
+            for (let i = 0; i < myButton.length; i++) {
+            myButton[i].style.visibility = "hidden";
+        }}
+        else {
+            setCount(count + 1);
+        }
+    }
+    if(event.key === "1") {
+        event.preventDefault();
+        validator.validators.isValid(keyA[count]);
+        if(count === keyA.length -1) { 
+            const myDiv = document.getElementById("validate");
+            ReactDOM.render(validator.validators.save(), myDiv);
+            const myButton = document.getElementsByClassName("buttonhide")
+            for (let i = 0; i < myButton.length; i++) {
+            myButton[i].style.visibility = "hidden";
+        }}
+        else {
+            setCount(count + 1);
+        }
+    }}
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+    return () => {
+        document.removeEventListener('keydown', keyDownHandler);
+      };
+  });
+
+// document.addEventListener('keydown', (event) => {
+//     console.log(event.key);
+    
+//  });
+
+
+
 if(localStorage.getItem("AisValide") !== "true" && localStorage.getItem("validation") !== "true"){
     return (
         <div className="images">
@@ -44,8 +123,17 @@ if(localStorage.getItem("AisValide") !== "true" && localStorage.getItem("validat
                 }}>Valider</button>
         
         <button className="buttonhide button is-normal is-rounded  is-danger is-responsive" onClick={() => {
-                  validator.validators.isNotValid(keyA[count]);
-                  setCount(count + 1);
+                             validator.validators.isNotValid(keyA[count]);
+                             if(count === keyA.length -1) { 
+                                 const myDiv = document.getElementById("validate");
+                                 ReactDOM.render(validator.validators.save(), myDiv);
+                                 const myButton = document.getElementsByClassName("buttonhide")
+                                 for (let i = 0; i < myButton.length; i++) {
+                                 myButton[i].style.visibility = "hidden";
+                             }}
+                             else {
+                                 setCount(count + 1);
+                             }
                 }}>Refuser</button>
         
         <br/>

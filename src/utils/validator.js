@@ -118,7 +118,7 @@ const validators = {
         const index = myArray[0].findIndex(x => x.name === myImg);
         myArray[0][index].Bvalue = "undefined";
         myArray[0][index].Choice = "undefined";
-    }
+    },
 
 }
 
