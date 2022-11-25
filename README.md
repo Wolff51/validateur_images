@@ -21,3 +21,10 @@ npm start
 ```bash
 npm run electron-dev
 ```
+
+### Identifiant de connexion
+
+```bash
+Identifiant : admin@supairvision.com
+Mot de passe : admin
+```
