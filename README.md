@@ -2,7 +2,7 @@
 
 Exercice de création d'un validateur d'images en React / Electron
 
-## Guide d'utilisation (nécéssite l'utilisation de 2 terminals)
+## Guide d'utilisation (necéssite l'utilisation de 2 terminals)
 
 ### Installation
 
@@ -10,13 +10,13 @@ Exercice de création d'un validateur d'images en React / Electron
 npm install
 ```
 
-### Lancement du support React
+### Lancement du support React (1er terminal)
 
 ```bash
 npm start
 ```
 
-### Dernière étape : lancement d'Electron
+### Dernière étape : lancement d'Electron (2nd terminal)
 
 ```bash
 npm run electron-dev
