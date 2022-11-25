@@ -2,7 +2,7 @@
 
 Exercice de création d'un validateur d'images en React / Electron
 
-## Guide d'utilisation
+## Guide d'utilisation (nécéssite l'utilisation de 2 terminals)
 
 ### Installation
 
